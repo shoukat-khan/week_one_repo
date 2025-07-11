@@ -62,7 +62,7 @@ def create_database_if_not_exists():
         exists = cursor.fetchone()
         
         if not exists:
-            cursor.execute(f"CREATE DATABASE {target_db}")
+            cursor.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(target_db)))
             print(f"✅ Database '{target_db}' created successfully")
         else:
             print(f"✅ Database '{target_db}' already exists")
