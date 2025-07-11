@@ -289,7 +289,7 @@ def insert_data_from_files(connection, data_dir):
                     cursor.execute("""
                         INSERT INTO employees (id, name, age, department, salary, city)
                         VALUES (%s, %s, %s, %s, %s, %s)
-                    """, (row['id'], row['name'], row['age'], row['department'], row['salary'], row['city']))
+                    """, (int(row['id']), row['name'], int(row['age']), row['department'], float(row['salary']), row['city']))
                     successful_employees += 1
                 except IntegrityError as e:
                     connection.rollback()  # Rollback the failed transaction
