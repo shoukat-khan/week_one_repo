@@ -379,14 +379,21 @@ class LogProcessor:
             remaining = parts[2]
             
             # Extract log level and message
-            if " INFO " in remaining:
-                level, message = "INFO", remaining.split(" INFO ", 1)[1]
-            elif " ERROR " in remaining:
-                level, message = "ERROR", remaining.split(" ERROR ", 1)[1]
-            elif " WARNING " in remaining:
-                level, message = "WARNING", remaining.split(" WARNING ", 1)[1]
+            parts = remaining.split(maxsplit=1)
+            if len(parts) > 1:
+                level, message = parts[0], parts[1]
             else:
-                level, message = "UNKNOWN", remaining
+                level, message = parts[0], ""
+            
+            # Normalize log level
+            if level == "INFO":
+                level = "INFO"
+            elif level == "ERROR":
+                level = "ERROR"
+            elif level == "WARNING":
+                level = "WARNING"
+            else:
+                level = "UNKNOWN"
             
             return {
                 "timestamp": timestamp,
